@@ -1,6 +1,4 @@
-const _ = require('lodash');
-
-const dummy = (blogs) => 1;
+const dummy = (blogs) => 1; // eslint-disable-line no-unused-vars
 
 const totalLikes = (blogs) => blogs.reduce((prev, cur) => prev + cur.likes, 0);
 
