@@ -11,7 +11,7 @@ morgan.token('body', (request) => JSON.stringify(request.body));
 app.use(
 	morgan(
 		':method :url :status :res[content-length] - :response-time ms :body',
-		{ skip: (request, response) => process.env.NODE_ENV === 'test' }
+		{ skip: () => process.env.NODE_ENV === 'test' }
 	)
 );
 
