@@ -45,6 +45,30 @@ describe("blog's unique identifier", () => {
 	});
 });
 
+describe("blog's creation", () => {
+	test('creates a blog if data is valid', async () => {
+		const blogTitle = 'testTitle';
+		const blog = {
+			title: blogTitle,
+			author: 'testAuthor',
+			url: 'http://example.com',
+			likes: 1,
+		};
+
+		await api
+			.post('/api/blogs')
+			.send(blog)
+			.expect(201)
+			.expect('Content-Type', /application\/json/);
+
+		const blogs = await testHelper.blogsInDb();
+		expect(blogs.length).toBe(testHelper.blogs.length + 1);
+
+		const blogsTitles = blogs.map((blog) => blog.title);
+		expect(blogsTitles).toContain(blogTitle);
+	});
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
