@@ -33,6 +33,18 @@ describe('when there is initial blogs saved', () => {
 	});
 });
 
+describe("blog's unique identifier", () => {
+	test('is not _id', async () => {
+		const response = await api.get('/api/blogs');
+		expect(response.body[0]._id).not.toBeDefined();
+	});
+
+	test('is id', async () => {
+		const response = await api.get('/api/blogs');
+		expect(response.body[0].id).toBeDefined();
+	});
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
