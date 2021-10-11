@@ -1,5 +1,5 @@
 const listHelper = require('../utils/list_helper');
-const blogs = require('./blogs');
+const { blogs } = require('./testHelper');
 
 const lastMostLikedBlog = blogs[2];
 
