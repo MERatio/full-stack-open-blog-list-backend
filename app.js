@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 const blogsRouter = require('./controllers/blogs');
+const errorHandler = require('./utils/errorHandler');
 
 morgan.token('body', (request) => JSON.stringify(request.body));
 app.use(
@@ -21,5 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/blogs', blogsRouter);
+
+app.use(errorHandler);
 
 module.exports = app;
