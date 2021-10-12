@@ -16,4 +16,15 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog);
 });
 
+blogsRouter.delete('/:id', async (request, response) => {
+  const deletedBlog = await Blog.findByIdAndRemove(request.params.id);
+  if (!deletedBlog) {
+    const error = new Error("Person's phonebook info is already deleted");
+    error.name = 'NotFound';
+    throw error;
+  } else {
+    response.status(204).end();
+  }
+});
+
 module.exports = blogsRouter;

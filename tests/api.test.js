@@ -105,6 +105,31 @@ describe('title and url properties missing from request body', () => {
 	});
 });
 
+describe("blog's deletion", () => {
+	test('deletes a blog if id is valid', async () => {
+		const blogsAtTheStart = await testHelper.blogsInDb();
+		const blogToDelete = blogsAtTheStart[0];
+
+		await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+
+		const blogsAtTheEnd = await testHelper.blogsInDb();
+		expect(blogsAtTheEnd.length).toBe(testHelper.blogs.length - 1);
+
+		const blogsTitles = blogsAtTheEnd.map((blog) => blog.title);
+		expect(blogsTitles).not.toContain(blogToDelete.title);
+	});
+
+	test('fails if blog does not exist', async () => {
+		await api
+			.delete(`/api/blogs/${await testHelper.nonExistingId()}`)
+			.expect(404);
+	});
+
+	test('fails if id is invalid', async () => {
+		await api.delete(`/api/blogs/123456789`).expect(400);
+	});
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
