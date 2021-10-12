@@ -94,6 +94,17 @@ describe('likes property missing from request body', () => {
 	});
 });
 
+describe('title and url properties missing from request body', () => {
+	test('responds with status code 400 Bad Request', async () => {
+		const blog = {
+			author: 'testAuthor',
+			likes: 1,
+		};
+
+		await api.post('/api/blogs').send(blog).expect(400);
+	});
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
