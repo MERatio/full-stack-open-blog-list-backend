@@ -61,8 +61,8 @@ const blogsInDb = async () => {
 
 const nonExistingId = async () => {
 	const blog = new Blog({
-		title: 'Dummy Title',
-		author: 'Dummy Author',
+		title: 'dummyTitle',
+		author: 'dummyAuthor',
 		url: 'http://example.com',
 		likes: 1,
 	});
