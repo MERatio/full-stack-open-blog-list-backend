@@ -105,6 +105,42 @@ describe('title and url properties missing from request body', () => {
 	});
 });
 
+describe('blog update', () => {
+	const blogNewTitle = 'updatedTitle';
+	const blogNewData = {
+		title: blogNewTitle,
+		author: 'updatedAuthor',
+		url: 'https://example.com',
+		likes: 2,
+	};
+
+	test('updates a blog if id is valid', async () => {
+		const blogsAtTheStart = await testHelper.blogsInDb();
+		const blogAtTheStart = blogsAtTheStart[0];
+
+		await api
+			.put(`/api/blogs/${blogAtTheStart.id}`)
+			.send(blogNewData)
+			.expect(200);
+
+		const blogsAtTheEnd = await testHelper.blogsInDb();
+		const blogsTitles = blogsAtTheEnd.map((blog) => blog.title);
+		expect(blogsTitles).not.toContain(blogAtTheStart.title);
+		expect(blogsTitles).toContain(blogNewTitle);
+	});
+
+	test('fails if blog does not exist', async () => {
+		await api
+			.put(`/api/blogs/${await testHelper.nonExistingId()}`)
+			.send(blogNewData)
+			.expect(404);
+	});
+
+	test('fails if id is invalid', async () => {
+		await api.put(`/api/blogs/123456789`).send(blogNewData).expect(400);
+	});
+});
+
 describe("blog's deletion", () => {
 	test('deletes a blog if id is valid', async () => {
 		const blogsAtTheStart = await testHelper.blogsInDb();
