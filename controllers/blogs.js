@@ -33,7 +33,7 @@ blogsRouter.put('/:id', async (request, response) => {
 blogsRouter.delete('/:id', async (request, response) => {
   const deletedBlog = await Blog.findByIdAndRemove(request.params.id);
   if (!deletedBlog) {
-    const error = new Error("Person's phonebook info is already deleted");
+    const error = new Error('Blog not found');
     error.name = 'NotFound';
     throw error;
   } else {
