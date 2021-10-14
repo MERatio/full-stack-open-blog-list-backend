@@ -28,7 +28,7 @@ describe('when there is initial blogs saved', () => {
 
 	test('contains a specific blog', async () => {
 		const response = await api.get('/api/blogs');
-		const blogsTitles = response.body.map((blogTitle) => blogTitle.title);
+		const blogsTitles = response.body.map((blog) => blog.title);
 		expect(blogsTitles).toContain(testHelper.blogs[0].title);
 	});
 });
