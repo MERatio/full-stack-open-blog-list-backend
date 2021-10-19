@@ -32,7 +32,8 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
 blogsRouter.put('/:id', async (request, response) => {
   const updatedBlog = await Blog.findByIdAndUpdate(
     request.params.id,
-    request.body
+    request.body,
+    { new: true, runValidators: true }
   );
   if (!updatedBlog) {
     const error = new Error('Blog not found');
