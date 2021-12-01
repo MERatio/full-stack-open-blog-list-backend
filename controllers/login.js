@@ -26,7 +26,12 @@ loginRouter.post('/', async (request, response) => {
     expiresIn: 60 * 60,
   });
 
-  response.send({ token, username: user.username, name: user.name });
+  response.send({
+    token,
+    id: user._id.toString(),
+    username: user.username,
+    name: user.name,
+  });
 });
 
 module.exports = loginRouter;
