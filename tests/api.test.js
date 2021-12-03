@@ -49,6 +49,14 @@ describe('when there is initial users saved ', () => {
 	});
 });
 
+describe('GET api/users/:id', () => {
+	test('fetch individual user info', async () => {
+		const user = testHelper.users[0];
+		const response = await api.get(`/api/users/${user._id}`);
+		expect(response.body.id).toBe(user._id);
+	});
+});
+
 describe("user's creation", () => {
 	test('fails if username is not given', async () => {
 		const usersAtStart = await testHelper.usersInDb();
