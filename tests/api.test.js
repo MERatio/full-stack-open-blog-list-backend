@@ -39,8 +39,8 @@ describe('when there is initial users saved ', () => {
 
 	test('contains a specific user', async () => {
 		const response = await api.get('/api/users');
-		const usernames = response.body.map((user) => user.usernames);
-		expect(usernames).toContain(testHelper.users[0].usernames);
+		const usernames = response.body.map((user) => user.username);
+		expect(usernames).toContain(testHelper.users[0].username);
 	});
 
 	test('contains populated blogs', async () => {
