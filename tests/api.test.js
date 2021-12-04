@@ -303,6 +303,14 @@ describe("blog's creation", () => {
 	});
 });
 
+describe('GET api/blogs/:id', () => {
+	test('fetch individual blog info', async () => {
+		const blog = testHelper.blogs[0];
+		const response = await api.get(`/api/blogs/${blog._id}`);
+		expect(response.body.id).toBe(blog._id);
+	});
+});
+
 describe('likes property missing from request body', () => {
 	test('creates a blog with likes property default to 0', async () => {
 		const blogTitle = 'testTitle';
