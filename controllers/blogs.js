@@ -29,9 +29,9 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
   response.status(201).json(savedBlog);
 });
 
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:blogId', async (request, response) => {
   const updatedBlog = await Blog.findByIdAndUpdate(
-    request.params.id,
+    request.params.blogId,
     request.body,
     { new: true, runValidators: true }
   );
@@ -44,8 +44,8 @@ blogsRouter.put('/:id', async (request, response) => {
   }
 });
 
-blogsRouter.delete('/:id', userExtractor, async (request, response) => {
-  const blogToDelete = await Blog.findById(request.params.id);
+blogsRouter.delete('/:blogId', userExtractor, async (request, response) => {
+  const blogToDelete = await Blog.findById(request.params.blogId);
   if (!blogToDelete) {
     const error = new Error('Blog not found');
     error.name = 'NotFound';
@@ -59,7 +59,7 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
       .json({ error: 'unauthorize to delete the blog' });
   }
 
-  await Blog.findByIdAndRemove(request.params.id);
+  await Blog.findByIdAndRemove(request.params.blogId);
   user.blogs = user.blogs.filter(
     (blogId) => blogId.toString() !== blogToDelete._id.toString()
   );
