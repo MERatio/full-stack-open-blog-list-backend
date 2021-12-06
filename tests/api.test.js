@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = require('../app');
 const User = require('../models/user');
 const Blog = require('../models/blog');
+const Comment = require('../models/comment');
 const testHelper = require('./testHelper');
 
 jest.setTimeout(100000);
@@ -22,6 +23,9 @@ beforeEach(async () => {
 
 	await Blog.deleteMany();
 	await Blog.insertMany(testHelper.blogs);
+
+	await Comment.deleteMany();
+	await Comment.insertMany(testHelper.comments);
 });
 
 describe('when there is initial users saved ', () => {
@@ -452,6 +456,15 @@ describe("blog's deletion", () => {
 		expect(deleteBlogResponse.body.error).toBe(
 			'unauthorize to delete the blog'
 		);
+	});
+});
+
+describe('comments', () => {
+	test('GET', async () => {
+		const response = await api.get('/api/comments');
+
+		expect(response.body.length).toBe(6);
+		expect(response.body[0].content).toBeDefined();
 	});
 });
 

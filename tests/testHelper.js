@@ -2,6 +2,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Blog = require('../models/blog');
+const Comment = require('../models/comment');
 
 const passwordHash = bcrypt.hashSync('password', 10);
 
@@ -14,6 +15,7 @@ const generateObjectIdArray = (length) => {
 };
 
 const blogsIds = generateObjectIdArray(6);
+const commentsIds = generateObjectIdArray(6);
 
 const users = [
 	{
@@ -42,6 +44,7 @@ const blogs = [
 		url: 'https://reactpatterns.com/',
 		likes: 7,
 		user: users[0]._id,
+		comments: commentsIds,
 		__v: 0,
 	},
 	{
@@ -52,6 +55,7 @@ const blogs = [
 			'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
 		likes: 5,
 		user: users[0]._id,
+		comments: [],
 		__v: 0,
 	},
 	{
@@ -61,6 +65,7 @@ const blogs = [
 		url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
 		likes: 12,
 		user: users[0]._id,
+		comments: [],
 		__v: 0,
 	},
 	{
@@ -71,6 +76,7 @@ const blogs = [
 			'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
 		likes: 10,
 		user: users[0]._id,
+		comments: [],
 		__v: 0,
 	},
 	{
@@ -81,6 +87,7 @@ const blogs = [
 			'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
 		likes: 0,
 		user: users[0]._id,
+		comments: [],
 		__v: 0,
 	},
 	{
@@ -90,6 +97,46 @@ const blogs = [
 		url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
 		likes: 2,
 		user: users[0]._id,
+		comments: [],
+		__v: 0,
+	},
+];
+
+const comments = [
+	{
+		_id: commentsIds[0],
+		content: 'comment1',
+		blog: blogsIds[0]._id,
+		__v: 0,
+	},
+	{
+		_id: commentsIds[1],
+		content: 'comment2',
+		blog: blogsIds[0]._id,
+		__v: 0,
+	},
+	{
+		_id: commentsIds[2],
+		content: 'comment3',
+		blog: blogsIds[0]._id,
+		__v: 0,
+	},
+	{
+		_id: commentsIds[3],
+		content: 'comment4',
+		blog: blogsIds[0]._id,
+		__v: 0,
+	},
+	{
+		_id: commentsIds[4],
+		content: 'comment5',
+		blog: blogsIds[0]._id,
+		__v: 0,
+	},
+	{
+		_id: commentsIds[5],
+		content: 'comment6',
+		blog: blogsIds[0]._id,
 		__v: 0,
 	},
 ];
@@ -102,6 +149,11 @@ const usersInDb = async () => {
 const blogsInDb = async () => {
 	const blogs = await Blog.find({});
 	return blogs.map((blog) => blog.toJSON());
+};
+
+const commentsInDb = async () => {
+	const comments = await Comment.find({});
+	return comments.map((comment) => comment.toJSON());
 };
 
 const nonExistingId = async () => {
@@ -117,4 +169,12 @@ const nonExistingId = async () => {
 	return blog._id.toString();
 };
 
-module.exports = { users, blogs, usersInDb, blogsInDb, nonExistingId };
+module.exports = {
+	users,
+	blogs,
+	comments,
+	usersInDb,
+	blogsInDb,
+	commentsInDb,
+	nonExistingId,
+};
