@@ -471,7 +471,7 @@ describe('comments', () => {
 			const blog = testHelper.blogs[0];
 			const response = await api.get(`/api/blogs/${blog._id}/comments`);
 
-			expect(response.body.length).toBe(6);
+			expect(response.body.length).toBe(3);
 			expect(response.body[0].content).toBeDefined();
 		});
 	});
