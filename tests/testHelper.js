@@ -106,37 +106,36 @@ const comments = [
 	{
 		_id: commentsIds[0],
 		content: 'comment1',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 	{
 		_id: commentsIds[1],
 		content: 'comment2',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 	{
 		_id: commentsIds[2],
 		content: 'comment3',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 	{
 		_id: commentsIds[3],
 		content: 'comment4',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 	{
-		_id: commentsIds[4],
 		content: 'comment5',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 	{
 		_id: commentsIds[5],
 		content: 'comment6',
-		blog: blogsIds[0]._id,
+		blog: blogs[0]._id,
 		__v: 0,
 	},
 ];

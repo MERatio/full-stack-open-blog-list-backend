@@ -32,7 +32,7 @@ app.use(tokenExtractor);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/blogs', blogsRouter);
-app.use('/api/blogs/comments', commentsRouter);
+app.use('/api/blogs/:blogId/comments', commentsRouter);
 
 if (process.env.NODE_ENV === 'test') {
 	const testingRouter = require('./controllers/testing');
