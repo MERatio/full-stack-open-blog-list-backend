@@ -1,27 +1,31 @@
+const ObjectId = require('mongoose').Types.ObjectId;
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Blog = require('../models/blog');
 
 const passwordHash = bcrypt.hashSync('password', 10);
 
+const generateObjectIdArray = (length) => {
+	let arr = [];
+	for (let i = 0; i < length; i++) {
+		arr = [...arr, ObjectId().toString()];
+	}
+	return arr;
+};
+
+const blogsIds = generateObjectIdArray(6);
+
 const users = [
 	{
-		_id: '616953444252abe7bbef5b1e',
+		_id: ObjectId().toString(),
 		username: 'JohnDoe',
 		name: 'John Doe',
 		passwordHash,
-		blogs: [
-			'5a422a851b54a676234d17f7',
-			'5a422aa71b54a676234d17f8',
-			'5a422b3a1b54a676234d17f9',
-			'5a422b891b54a676234d17fa',
-			'5a422ba71b54a676234d17fb',
-			'5a422bc61b54a676234d17fc',
-		],
+		blogs: blogsIds,
 		__v: 0,
 	},
 	{
-		_id: '616951be59905daff54600a3',
+		_id: ObjectId().toString(),
 		username: 'JaneDoe',
 		name: 'Jane Doe',
 		passwordHash,
@@ -32,7 +36,7 @@ const users = [
 
 const blogs = [
 	{
-		_id: '5a422a851b54a676234d17f7',
+		_id: blogsIds[0],
 		title: 'React patterns',
 		author: 'Michael Chan',
 		url: 'https://reactpatterns.com/',
@@ -41,7 +45,7 @@ const blogs = [
 		__v: 0,
 	},
 	{
-		_id: '5a422aa71b54a676234d17f8',
+		_id: blogsIds[1],
 		title: 'Go To Statement Considered Harmful',
 		author: 'Edsger W. Dijkstra',
 		url:
@@ -51,7 +55,7 @@ const blogs = [
 		__v: 0,
 	},
 	{
-		_id: '5a422b3a1b54a676234d17f9',
+		_id: blogsIds[2],
 		title: 'Canonical string reduction',
 		author: 'Edsger W. Dijkstra',
 		url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
@@ -60,7 +64,7 @@ const blogs = [
 		__v: 0,
 	},
 	{
-		_id: '5a422b891b54a676234d17fa',
+		_id: blogsIds[3],
 		title: 'First class tests',
 		author: 'Robert C. Martin',
 		url:
@@ -70,7 +74,7 @@ const blogs = [
 		__v: 0,
 	},
 	{
-		_id: '5a422ba71b54a676234d17fb',
+		_id: blogsIds[4],
 		title: 'TDD harms architecture',
 		author: 'Robert C. Martin',
 		url:
@@ -80,7 +84,7 @@ const blogs = [
 		__v: 0,
 	},
 	{
-		_id: '5a422bc61b54a676234d17fc',
+		_id: blogsIds[5],
 		title: 'Type wars',
 		author: 'Robert C. Martin',
 		url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
