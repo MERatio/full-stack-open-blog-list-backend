@@ -75,6 +75,7 @@ blogsRouter.delete('/:blogId', userExtractor, async (request, response) => {
   }
 
   await Blog.findByIdAndRemove(request.params.blogId);
+  await Comment.deleteMany({ blog: request.params.blogId });
   user.blogs = user.blogs.filter(
     (blogId) => blogId.toString() !== blogToDelete._id.toString()
   );
