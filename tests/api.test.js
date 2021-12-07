@@ -426,7 +426,7 @@ describe('blogs', () => {
 		let blogsAtTheStart;
 		let blogToDelete;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			blogsAtTheStart = await testHelper.blogsInDb();
 			blogToDelete = blogsAtTheStart[0];
 		});
