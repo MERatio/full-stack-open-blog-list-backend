@@ -46,7 +46,9 @@ blogsRouter.put('/:blogId', async (request, response) => {
     request.params.blogId,
     request.body,
     { new: true, runValidators: true }
-  );
+  )
+    .populate('user', { username: 1, name: 1 })
+    .populate('comments');
   if (!updatedBlog) {
     const error = new Error('Blog not found');
     error.name = 'NotFound';

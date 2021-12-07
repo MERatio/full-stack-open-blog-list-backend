@@ -383,20 +383,31 @@ describe('blogs', () => {
 			url: 'https://example.com',
 			likes: 2,
 		};
+		let blogAtTheStart;
+		let response;
 
-		test('updates a blog if id is valid', async () => {
+		beforeEach(async () => {
 			const blogsAtTheStart = await testHelper.blogsInDb();
-			const blogAtTheStart = blogsAtTheStart[0];
-
-			await api
+			blogAtTheStart = blogsAtTheStart[0];
+			response = await api
 				.put(`/api/blogs/${blogAtTheStart.id}`)
 				.send(blogNewData)
 				.expect(200);
+		});
 
+		test('updates a blog if id is valid', async () => {
 			const blogsAtTheEnd = await testHelper.blogsInDb();
 			const blogsTitles = blogsAtTheEnd.map((blog) => blog.title);
 			expect(blogsTitles).not.toContain(blogAtTheStart.title);
 			expect(blogsTitles).toContain(blogNewTitle);
+		});
+
+		test('populate user', () => {
+			expect(response.body.user.id).toBeDefined();
+		});
+
+		test('populate comments', () => {
+			expect(response.body.comments[0].id).toBeDefined();
 		});
 
 		test('fails if blog does not exist', async () => {
