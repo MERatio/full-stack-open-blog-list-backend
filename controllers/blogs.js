@@ -23,6 +23,7 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
     url: body.url,
     likes: body.likes,
     user: user._id,
+    comments: [],
   });
 
   const savedBlog = await blog.save();
