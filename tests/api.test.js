@@ -354,10 +354,19 @@ describe('blogs', () => {
 	});
 
 	describe('GET /:blogId', () => {
+		let blog;
+		let response;
+
+		beforeEach(async () => {
+			blog = testHelper.blogs[0];
+			response = await api.get(`/api/blogs/${blog._id}`);
+		});
 		test('fetch individual blog info', async () => {
-			const blog = testHelper.blogs[0];
-			const response = await api.get(`/api/blogs/${blog._id}`);
 			expect(response.body.id).toBe(blog._id);
+		});
+
+		test('comments are populated', () => {
+			expect(response.body.comments[0].id).toBeDefined();
 		});
 	});
 
@@ -461,18 +470,6 @@ describe('blogs', () => {
 			expect(deleteBlogResponse.body.error).toBe(
 				'unauthorize to delete the blog'
 			);
-		});
-	});
-});
-
-describe('comments', () => {
-	describe('GET /', () => {
-		test('get individual comment', async () => {
-			const blog = testHelper.blogs[0];
-			const response = await api.get(`/api/blogs/${blog._id}/comments`);
-
-			expect(response.body.length).toBe(3);
-			expect(response.body[0].content).toBeDefined();
 		});
 	});
 });

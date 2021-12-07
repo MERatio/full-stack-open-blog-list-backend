@@ -30,10 +30,12 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
 });
 
 blogsRouter.get('/:blogId', async (request, response) => {
-  const blog = await Blog.findById(request.params.blogId).populate('user', {
-    username: 1,
-    name: 1,
-  });
+  const blog = await Blog.findById(request.params.blogId)
+    .populate('user', {
+      username: 1,
+      name: 1,
+    })
+    .populate('comments');
   response.json(blog);
 });
 
