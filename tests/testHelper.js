@@ -15,9 +15,7 @@ const generateObjectIdArray = (length) => {
 };
 
 const blogsIds = generateObjectIdArray(6);
-const [blogsIdsFirstHalf, blogsIdsSecondHalf] = blogsIds;
 const commentsIds = generateObjectIdArray(6);
-const [commentsIdsFirstHalf, commentsIdsSecondHalf] = commentsIds;
 
 const users = [
 	{
@@ -25,7 +23,7 @@ const users = [
 		username: 'JohnDoe',
 		name: 'John Doe',
 		passwordHash,
-		blogs: blogsIdsFirstHalf,
+		blogs: [blogsIds[0], blogsIds[1], blogsIds[2]],
 		__v: 0,
 	},
 	{
@@ -33,7 +31,7 @@ const users = [
 		username: 'JaneDoe',
 		name: 'Jane Doe',
 		passwordHash,
-		blogs: blogsIdsSecondHalf,
+		blogs: [blogsIds[3], blogsIds[4], blogsIds[5]],
 		__v: 0,
 	},
 ];
@@ -46,7 +44,7 @@ const blogs = [
 		url: 'https://reactpatterns.com/',
 		likes: 7,
 		user: users[0]._id,
-		comments: commentsIdsFirstHalf,
+		comments: [commentsIds[0], commentsIds[1], commentsIds[2]],
 		__v: 0,
 	},
 	{
@@ -57,7 +55,7 @@ const blogs = [
 			'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
 		likes: 5,
 		user: users[0]._id,
-		comments: commentsIdsSecondHalf,
+		comments: [commentsIds[3], commentsIds[4], commentsIds[5]],
 		__v: 0,
 	},
 	{
@@ -130,6 +128,7 @@ const comments = [
 		__v: 0,
 	},
 	{
+		_id: commentsIds[4],
 		content: 'comment5',
 		blog: blogs[1]._id,
 		__v: 0,
