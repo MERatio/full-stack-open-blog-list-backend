@@ -245,6 +245,11 @@ describe('blogs', () => {
 			const response = await api.get('/api/blogs');
 			expect(response.body[0].user.id).toBeDefined();
 		});
+
+		test('contains comments', async () => {
+			const response = await api.get('/api/blogs');
+			expect(response.body[0].comments[0].id).toBeDefined();
+		});
 	});
 
 	describe("blog's unique identifier", () => {
