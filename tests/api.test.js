@@ -490,6 +490,74 @@ describe('blogs', () => {
 	});
 });
 
+describe.only('comments', () => {
+	describe('POST /', () => {
+		let blogAtTheStart;
+
+		beforeEach(async () => {
+			const blogsAtTheStart = await testHelper.blogsInDb();
+			blogAtTheStart = blogsAtTheStart[0];
+		});
+
+		test('creates a comment if data and token is valid', async () => {
+			const content = 'testComment';
+			const comment = {
+				content,
+			};
+
+			const response = await api
+				.post(`/api/blogs/${blogAtTheStart.id}/comments`)
+				.set('Authorization', `Bearer ${johnToken}`)
+				.send(comment)
+				.expect(201)
+				.expect('Content-Type', /application\/json/);
+
+			expect(response.body.id).toBeDefined();
+
+			const blogsAtTheEnd = await testHelper.blogsInDb();
+			const blogAtTheEnd = blogsAtTheEnd[0];
+			const commentsIdsAtTheEnd = blogAtTheEnd.comments.map((comment) =>
+				comment.toString()
+			);
+
+			expect(commentsIdsAtTheEnd).toContain(response.body.id);
+		});
+
+		test('fails if token is missing or invalid', async () => {
+			const content = 'testComment';
+			const comment = {
+				content,
+			};
+
+			const response = await api
+				.post(`/api/blogs/${blogAtTheStart.id}/comments`)
+				.send(comment)
+				.expect(401)
+				.expect('Content-Type', /application\/json/);
+
+			expect(response.body.error).toBe('invalid token');
+
+			const blogsAtTheEnd = await testHelper.blogsInDb();
+			const blogAtTheEnd = blogsAtTheEnd[0];
+			const commentsIdsAtTheEnd = blogAtTheEnd.comments.map((comment) =>
+				comment.toString()
+			);
+
+			expect(commentsIdsAtTheEnd).not.toContain(response.body.id);
+		});
+
+		describe('content property is missing from request body', () => {
+			test('responds with status code 400 Bad Request', async () => {
+				await api
+					.post(`/api/blogs/${blogAtTheStart.id}/comments`)
+					.set('Authorization', `Bearer ${johnToken}`)
+					.send({})
+					.expect(400);
+			});
+		});
+	});
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
